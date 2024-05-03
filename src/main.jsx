@@ -11,6 +11,7 @@ import {
 } from "react-router-dom";
 import Signup from "./Component/Signup.jsx";
 import Format from "./Component/Format.jsx";
+import Print from "./Component/Print.jsx";
 
 
 const route = createBrowserRouter(
@@ -23,6 +24,7 @@ const route = createBrowserRouter(
       <Route path="Learn" element={<Landing />} />
       <Route path="Contact" element={<Signup />} />
       <Route path="Signup" element={<Signup />} />
+      <Route path="Print" element={<Print />} />
     </Route>,
   ])
 );
