@@ -137,7 +137,8 @@ const Preview = (props) => {
                       {props.formdata[`introPara${(index + 1) % 10}`]}
                       {props.formdata[`introParafig${index + 1}`] ? (
                         <div className="image flex my-2 justify-center items-center">
-                          <img width='300px'
+                          <img
+                            width="300px"
                             src={props.formdata[`introParafig${index + 1}`]}
                             alt=""
                           />
@@ -170,19 +171,28 @@ const Preview = (props) => {
                       {props.formdata[`literaturePara${(index + 1) % 10}`]}
                       {props.formdata[`literatureParafig${index + 1}`] ? (
                         <div className="image flex my-2 justify-center items-center">
-                          <img width='300px'
-                            src={props.formdata[`literatureParafig${index + 1}`]}
+                          <img
+                            width="300px"
+                            src={
+                              props.formdata[`literatureParafig${index + 1}`]
+                            }
                             alt=""
                           />
                         </div>
                       ) : (
                         ""
                       )}
-                      {props.formdata[`literatureParafig${index + 1}caption`] ? (
+                      {props.formdata[
+                        `literatureParafig${index + 1}caption`
+                      ] ? (
                         <figure className="custom-figure text-[9px] font-light text-center">
                           <figcaption>
-                            Fig 1.{index + 1}{" "}
-                            {props.formdata[`literatureParafig${index + 1}caption`]}
+                            Fig 2.{index + 1}{" "}
+                            {
+                              props.formdata[
+                                `literatureParafig${index + 1}caption`
+                              ]
+                            }
                           </figcaption>
                         </figure>
                       ) : (
@@ -203,19 +213,28 @@ const Preview = (props) => {
                       {props.formdata[`architecturePara${(index + 1) % 10}`]}
                       {props.formdata[`architectureParafig${index + 1}`] ? (
                         <div className="image flex my-2 justify-center items-center">
-                          <img width='300px'
-                            src={props.formdata[`architectureParafig${index + 1}`]}
+                          <img
+                            width="300px"
+                            src={
+                              props.formdata[`architectureParafig${index + 1}`]
+                            }
                             alt=""
                           />
                         </div>
                       ) : (
                         ""
                       )}
-                      {props.formdata[`architectureParafig${index + 1}caption`] ? (
+                      {props.formdata[
+                        `architectureParafig${index + 1}caption`
+                      ] ? (
                         <figure className="custom-figure text-[9px] font-light text-center">
                           <figcaption>
-                            Fig 1.{index + 1}{" "}
-                            {props.formdata[`architectureParafig${index + 1}caption`]}
+                            Fig 3.{index + 1}{" "}
+                            {
+                              props.formdata[
+                                `architectureParafig${index + 1}caption`
+                              ]
+                            }
                           </figcaption>
                         </figure>
                       ) : (
@@ -236,19 +255,28 @@ const Preview = (props) => {
                       {props.formdata[`methodologyPara${(index + 1) % 10}`]}
                       {props.formdata[`methodologyParafig${index + 1}`] ? (
                         <div className="image flex my-2 justify-center items-center">
-                          <img width='300px'
-                            src={props.formdata[`methodologyParafig${index + 1}`]}
+                          <img
+                            width="300px"
+                            src={
+                              props.formdata[`methodologyParafig${index + 1}`]
+                            }
                             alt=""
                           />
                         </div>
                       ) : (
                         ""
                       )}
-                      {props.formdata[`methodologyParafig${index + 1}caption`] ? (
+                      {props.formdata[
+                        `methodologyParafig${index + 1}caption`
+                      ] ? (
                         <figure className="custom-figure text-[9px] font-light text-center">
                           <figcaption>
-                            Fig 1.{index + 1}{" "}
-                            {props.formdata[`methodologyParafig${index + 1}caption`]}
+                            Fig 4.{index + 1}{" "}
+                            {
+                              props.formdata[
+                                `methodologyParafig${index + 1}caption`
+                              ]
+                            }
                           </figcaption>
                         </figure>
                       ) : (
@@ -269,7 +297,8 @@ const Preview = (props) => {
                       {props.formdata[`resultPara${(index + 1) % 10}`]}
                       {props.formdata[`resultParafig${index + 1}`] ? (
                         <div className="image flex my-2 justify-center items-center">
-                          <img width='300px'
+                          <img
+                            width="300px"
                             src={props.formdata[`resultParafig${index + 1}`]}
                             alt=""
                           />
@@ -280,7 +309,7 @@ const Preview = (props) => {
                       {props.formdata[`resultParafig${index + 1}caption`] ? (
                         <figure className="custom-figure text-[9px] font-light text-center">
                           <figcaption>
-                            Fig 1.{index + 1}{" "}
+                            Fig 5.{index + 1}{" "}
                             {props.formdata[`resultParafig${index + 1}caption`]}
                           </figcaption>
                         </figure>
