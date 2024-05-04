@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import Figure from "./Figure";
+import Table from "./Table";
 const Edit = (props) => {
   const [drop, setdrop] = useState(false);
   const [author, setauthor] = useState(1);
@@ -10,6 +11,8 @@ const Edit = (props) => {
   const [methodologypara, setmethodologypara] = useState(1);
   const [resultpara, setresultpara] = useState(1);
   const [conclusionpara, setconclusionpara] = useState(1);
+  const [showfigure, setshowfigure] = useState(false);
+  const [showtable, setshowtable] = useState(false);
   const handleChange = (e) => {
     const { name, value } = e.target;
     props.setformdata({
@@ -220,7 +223,6 @@ const Edit = (props) => {
               ))}
             </div>
           </div>
-
           <div className="type font-semibold text-xl">Abstract & Keywords</div>
 
           <label htmlFor="abstract" className="block text-sm font-medium mb-1">
@@ -262,7 +264,7 @@ const Edit = (props) => {
             </label>
             {[...Array(parseInt(intropara))].map((_, index) => {
               return (
-                <>
+                <div id={`intropara${index + 1}`} key={index}>
                   <label
                     htmlFor={`intro${index}`}
                     key={index}
@@ -279,7 +281,20 @@ const Edit = (props) => {
                     className="bg-[#eff2f9] rounded-lg text-sm px-3 py-2 w-full"
                     placeholder={`Enter Introduction Para ${index + 1}`}
                   ></textarea>
-                </>
+
+                  <Figure
+                    formdata={props.formdata}
+                    setformdata={props.setformdata}
+                    id={`introParafig${index + 1}`}
+                    className="hidden"
+                  />
+                  <Table
+                    formdata={props.formdata}
+                    setformdata={props.setformdata}
+                    id={`introParatable${index + 1}`}
+                    className="hidden"
+                  />
+                </div>
               );
             })}
             <div className="addbutton flex gap-2">
@@ -290,10 +305,13 @@ const Edit = (props) => {
                 className="flex gap-1 items-center justify-center text-sm bg-blue-200 px-2 py-1 rounded-xl"
               >
                 Add Para <IoMdAddCircleOutline />
-              </button>{" "}
+              </button>
+
               <button
                 onClick={() => {
-                  setresultpara((resultpara) => resultpara + 1);
+                  document
+                    .getElementById(`introParafig${intropara}`)
+                    .classList.remove("hidden");
                 }}
                 className="flex gap-1 items-center justify-center text-sm bg-blue-200 px-2 py-1 rounded-xl"
               >
@@ -301,7 +319,9 @@ const Edit = (props) => {
               </button>
               <button
                 onClick={() => {
-                  setresultpara((resultpara) => resultpara + 1);
+                  document
+                    .getElementById(`introParatable${intropara}`)
+                    .classList.remove("hidden");
                 }}
                 className="flex gap-1 items-center justify-center text-sm bg-blue-200 px-2 py-1 rounded-xl"
               >
@@ -318,10 +338,9 @@ const Edit = (props) => {
             </label>
             {[...Array(parseInt(literaturepara))].map((_, index) => {
               return (
-                <>
+                <div key={index}>
                   <label
                     htmlFor={`literature${index}`}
-                    key={index}
                     className="block text-sm font-medium mb-1"
                   >
                     Para{index + 1}:
@@ -335,7 +354,19 @@ const Edit = (props) => {
                     className="bg-[#eff2f9] rounded-lg text-sm px-3 py-2 w-full"
                     placeholder={`Enter Literature Para ${index + 1}`}
                   ></textarea>
-                </>
+                  <Figure
+                    formdata={props.formdata}
+                    setformdata={props.setformdata}
+                    id={`literatureParafig${index + 1}`}
+                    className="hidden"
+                  />
+                  <Table
+                    formdata={props.formdata}
+                    setformdata={props.setformdata}
+                    id={`literatureParatable${index + 1}`}
+                    className="hidden"
+                  />
+                </div>
               );
             })}
             <div className="addbutton flex gap-2">
@@ -349,7 +380,9 @@ const Edit = (props) => {
               </button>{" "}
               <button
                 onClick={() => {
-                  setresultpara((resultpara) => resultpara + 1);
+                  document
+                    .getElementById(`literatureParafig${literaturepara}`)
+                    .classList.remove("hidden");
                 }}
                 className="flex gap-1 items-center justify-center text-sm bg-blue-200 px-2 py-1 rounded-xl"
               >
@@ -357,7 +390,9 @@ const Edit = (props) => {
               </button>
               <button
                 onClick={() => {
-                  setresultpara((resultpara) => resultpara + 1);
+                  document
+                    .getElementById(`literatureParatable${literaturepara}`)
+                    .classList.remove("hidden");
                 }}
                 className="flex gap-1 items-center justify-center text-sm bg-blue-200 px-2 py-1 rounded-xl"
               >
@@ -377,10 +412,9 @@ const Edit = (props) => {
             </label>
             {[...Array(parseInt(architecturepara))].map((_, index) => {
               return (
-                <>
+                <div key={index}>
                   <label
                     htmlFor={`architecture${index}`}
-                    key={index}
                     className="block text-sm font-medium mb-1"
                   >
                     Para{index + 1}:
@@ -396,7 +430,19 @@ const Edit = (props) => {
                     className="bg-[#eff2f9] rounded-lg text-sm px-3 py-2 w-full"
                     placeholder={`Enter Architecture Para ${index + 1}`}
                   ></textarea>
-                </>
+                  <Figure
+                    formdata={props.formdata}
+                    setformdata={props.setformdata}
+                    id={`architectureParafig${index + 1}`}
+                    className="hidden"
+                  />
+                  <Table
+                    formdata={props.formdata}
+                    setformdata={props.setformdata}
+                    id={`architectureParatable${index + 1}`}
+                    className="hidden"
+                  />
+                </div>
               );
             })}
             <div className="addbutton flex gap-2">
@@ -412,7 +458,9 @@ const Edit = (props) => {
               </button>{" "}
               <button
                 onClick={() => {
-                  setresultpara((resultpara) => resultpara + 1);
+                  document
+                  .getElementById(`architectureParafig${architecturepara}`)
+                  .classList.remove("hidden");
                 }}
                 className="flex gap-1 items-center justify-center text-sm bg-blue-200 px-2 py-1 rounded-xl"
               >
@@ -420,7 +468,9 @@ const Edit = (props) => {
               </button>
               <button
                 onClick={() => {
-                  setresultpara((resultpara) => resultpara + 1);
+                  document
+                    .getElementById(`architectureParatable${architecturepara}`)
+                    .classList.remove("hidden");
                 }}
                 className="flex gap-1 items-center justify-center text-sm bg-blue-200 px-2 py-1 rounded-xl"
               >
@@ -437,7 +487,7 @@ const Edit = (props) => {
             </label>
             {[...Array(parseInt(methodologypara))].map((_, index) => {
               return (
-                <>
+                <div key={index}>
                   <label
                     htmlFor={`methodology${index}`}
                     key={index}
@@ -456,7 +506,19 @@ const Edit = (props) => {
                     className="bg-[#eff2f9] rounded-lg text-sm px-3 py-2 w-full"
                     placeholder={`Enter Methodology  Para ${index + 1}`}
                   ></textarea>
-                </>
+                  <Figure
+                    formdata={props.formdata}
+                    setformdata={props.setformdata}
+                    id={`methodologyParafig${index + 1}`}
+                    className="hidden"
+                  />
+                  <Table
+                    formdata={props.formdata}
+                    setformdata={props.setformdata}
+                    id={`methodologyParatable${index + 1}`}
+                    className="hidden"
+                  />
+                </div>
               );
             })}
             <div className="addbutton flex gap-2">
@@ -470,7 +532,9 @@ const Edit = (props) => {
               </button>{" "}
               <button
                 onClick={() => {
-                  setresultpara((resultpara) => resultpara + 1);
+                  document
+                  .getElementById(`methodologyParafig${methodologypara}`)
+                  .classList.remove("hidden");
                 }}
                 className="flex gap-1 items-center justify-center text-sm bg-blue-200 px-2 py-1 rounded-xl"
               >
@@ -478,7 +542,9 @@ const Edit = (props) => {
               </button>
               <button
                 onClick={() => {
-                  setresultpara((resultpara) => resultpara + 1);
+                  document
+                  .getElementById(`methodologyParatable${methodologypara}`)
+                  .classList.remove("hidden");
                 }}
                 className="flex gap-1 items-center justify-center text-sm bg-blue-200 px-2 py-1 rounded-xl"
               >
@@ -496,10 +562,9 @@ const Edit = (props) => {
             </label>
             {[...Array(parseInt(resultpara))].map((_, index) => {
               return (
-                <>
+                <div key={index}>
                   <label
                     htmlFor={`result${index}`}
-                    key={index}
                     className="block text-sm font-medium mb-1"
                   >
                     Para{index + 1}:
@@ -513,7 +578,19 @@ const Edit = (props) => {
                     className="bg-[#eff2f9] rounded-lg text-sm px-3 py-2 w-full"
                     placeholder={`Enter Result Para ${index + 1}`}
                   ></textarea>
-                </>
+                  <Figure
+                    formdata={props.formdata}
+                    setformdata={props.setformdata}
+                    id={`resultParafig${index + 1}`}
+                    className="hidden"
+                  />
+                  <Table
+                    formdata={props.formdata}
+                    setformdata={props.setformdata}
+                    id={`resultParatable${index + 1}`}
+                    className="hidden"
+                  />
+                </div>
               );
             })}
             <div className="addbutton flex gap-2">
@@ -526,21 +603,25 @@ const Edit = (props) => {
                 Add Para <IoMdAddCircleOutline />
               </button>{" "}
               <button
-              onClick={() => {
-                setresultpara((resultpara) => resultpara + 1);
-              }}
-              className="flex gap-1 items-center justify-center text-sm bg-blue-200 px-2 py-1 rounded-xl"
-            >
-              Add Figure <IoMdAddCircleOutline />
-            </button>
-            <button
-              onClick={() => {
-                setresultpara((resultpara) => resultpara + 1);
-              }}
-              className="flex gap-1 items-center justify-center text-sm bg-blue-200 px-2 py-1 rounded-xl"
-            >
-              Add Table <IoMdAddCircleOutline />
-            </button>
+                onClick={() => {
+                  document
+                    .getElementById(`resultParafig${resultpara}`)
+                    .classList.remove("hidden");
+                }}
+                className="flex gap-1 items-center justify-center text-sm bg-blue-200 px-2 py-1 rounded-xl"
+              >
+                Add Figure <IoMdAddCircleOutline />
+              </button>
+              <button
+                onClick={() => {
+                  document
+                    .getElementById(`resultParafig${resultpara}`)
+                    .classList.remove("hidden");
+                }}
+                className="flex gap-1 items-center justify-center text-sm bg-blue-200 px-2 py-1 rounded-xl"
+              >
+                Add Table <IoMdAddCircleOutline />
+              </button>
             </div>
           </div>
           <div className="conclusion">
@@ -552,10 +633,9 @@ const Edit = (props) => {
             </label>
             {[...Array(parseInt(conclusionpara))].map((_, index) => {
               return (
-                <>
+                <div key={index}>
                   <label
                     htmlFor={`conclusion${index}`}
-                    key={index}
                     className="block text-sm font-medium mb-1"
                   >
                     Para{index + 1}:
@@ -569,7 +649,7 @@ const Edit = (props) => {
                     className="bg-[#eff2f9] rounded-lg text-sm px-3 py-2 w-full"
                     placeholder={`Enter Conclusion Para ${index + 1}`}
                   ></textarea>
-                </>
+                </div>
               );
             })}
             <div className="addbutton flex gap-2">
@@ -583,7 +663,6 @@ const Edit = (props) => {
               </button>
             </div>
           </div>
-          <Figure/>
           <input
             type="submit"
             value="Submit"
