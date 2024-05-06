@@ -1,72 +1,112 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
 const Table = (props) => {
-  const [rows, setrows] = useState(null);
-  const [columns, setcolumns] = useState(null);
-  const [tabledata, settabledata] = useState({
-    caption: "",
+  const [tableData, setTableData] = useState({
+    caption: '',
     rows: 0,
     columns: 0,
+    data: [], // Multidimensional array to store table values
   });
-  const handelsubmit = (e) => {
-    e.preventDefault();
-    settabledata({ ...tabledata, [e.target.name]: e.target.value });
-  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    if (value < 0) {
-      return;
-    }
-    settabledata({
-      ...tabledata,
+    setTableData({
+      ...tableData,
       [name]: value,
     });
   };
+  const handleTableValueChange = (e, rowIndex, colIndex) => {
+    const newData = [...tableData.data];
+    
+    // Ensure the row exists
+    if (!newData[rowIndex]) {
+      newData[rowIndex] = [];
+    }
+  
+    newData[rowIndex][colIndex] = e.target.value;
+    setTableData({
+      ...tableData,
+      data: newData,
+    });
+  };
+  
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Create a new array to hold the table data
+    const newData = [];
+    for (let i = 0; i < tableData.rows; i++) {
+      const newRow = [];
+      for (let j = 0; j < tableData.columns; j++) {
+        newRow.push('');
+      }
+      newData.push(newRow);
+    }
+    // Update the state with the new data
+    setTableData({
+      ...tableData,
+      data: newData,
+    });
+  };
+
+  const handleFormSubmit = () => {
+    // Update formData with the table data
+    const updatedFormData = { ...props.formdata };
+    updatedFormData[props.id] = tableData.data;
+    updatedFormData[props.id+`caption`] = tableData.caption;
+    props.setformdata(updatedFormData)
+    console.log('Table ',props.formdata)
+  };
+
   return (
     <div className={`p-4 ${props.className}`} id={props.id}>
-      <form onSubmit={handelsubmit} className="mb-4">
+      <form onSubmit={handleSubmit} className="mb-4">
+        <label htmlFor="tablecaption">Table Caption</label>
         <input
           type="text"
+          id='tablecaption'
           placeholder="Enter table caption"
           name="caption"
-          value={tabledata.caption}
-          onChange={(e) => handleChange(e)}
+          value={tableData.caption}
+          onChange={handleChange}
           className="w-full mb-2 p-2 border rounded"
         />
+        <label htmlFor="tablerows">Table Rows</label>
         <input
           type="number"
           name="rows"
+          id='tablerows'
           placeholder="Enter number of Rows"
-          value={tabledata.rows}
-          onChange={(e) => handleChange(e)}
+          value={tableData.rows}
+          onChange={handleChange}
           className="w-full mb-2 p-2 border rounded"
         />
+        <label htmlFor="tablecol">Table Columns</label>
         <input
           type="number"
           name="columns"
+          id='tablecol'
           placeholder="Enter number of Columns"
-          value={tabledata.columns}
-          onChange={(e) => handleChange(e)}
+          value={tableData.columns}
+          onChange={handleChange}
           className="w-full mb-2 p-2 border rounded"
         />
-        <input
-          type="submit"
-          value="Generate Table"
-          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 cursor-pointer"
-        />
+        
       </form>
-      {tabledata.rows && (
+      {tableData.rows ? (
         <div className="table">
           <table className="border-collapse border border-gray-400">
             <tbody>
-              {[...Array(parseInt(tabledata.columns))].map((_, index) => (
-                <tr key={index}>
-                  {[...Array(parseInt(tabledata.rows))].map((_, rowsindex) => (
-                    <td key={rowsindex} className="border border-gray-400">
+              {[...Array(parseInt(tableData.rows))].map((_, rowIndex) => (
+                <tr key={rowIndex}>
+                  {[...Array(parseInt(tableData.columns))].map((_, colIndex) => (
+                    <td key={colIndex} className="border border-gray-400">
                       <input
                         type="text"
                         placeholder="Enter Value"
                         className="w-full p-2 border rounded"
+                        value={tableData.data[rowIndex]?.[colIndex] || ''}
+                        onChange={(e) => handleTableValueChange(e, rowIndex, colIndex)}
                       />
                     </td>
                   ))}
@@ -75,7 +115,13 @@ const Table = (props) => {
             </tbody>
           </table>
         </div>
-      )}
+      ):''}
+      <button
+        onClick={handleFormSubmit}
+        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 cursor-pointer mt-4"
+      >
+        Save Table Data
+      </button>
     </div>
   );
 };

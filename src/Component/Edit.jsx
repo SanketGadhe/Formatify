@@ -10,6 +10,7 @@ const Edit = (props) => {
   const [architecturepara, setarchitecturepara] = useState(1);
   const [methodologypara, setmethodologypara] = useState(1);
   const [resultpara, setresultpara] = useState(1);
+  const [referencepara, setreferencepara] = useState(1);
   const [conclusionpara, setconclusionpara] = useState(1);
   const [showfigure, setshowfigure] = useState(false);
   const [showtable, setshowtable] = useState(false);
@@ -34,23 +35,22 @@ const Edit = (props) => {
       [name]: value,
     };
     setauth(updatedAuthors);
-    console.log(authordetail);
   };
+ 
+  const changepaper=(e)=>{
+    props.setpaper(e.target.value)
+  }
   useEffect(() => {
     props.setformdata({ ...props.formdata, ["authors"]: authordetail });
-    console.log("WHorle", props.formdata);
   }, [authordetail]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("props.formdata", props.formdata);
   };
   const addauthor = (e) => {
     setauthor(e.target.value);
     let allauth = document.querySelector(".authors");
     const singleauth = document.querySelector("singlesauth");
-    console.log(authordetail);
-    console.log(props.formdata);
   };
 
   return (
@@ -64,7 +64,7 @@ const Edit = (props) => {
             Select Paper:
           </label>
         </div>
-        <div className="drop relative">
+        {/* <div className="drop relative">
           <button
             id="dropdownDefaultButton"
             name="dropdownl"
@@ -138,7 +138,21 @@ const Edit = (props) => {
               </li>
             </ul>
           </div>
-        </div>
+        </div> */}
+         <select
+              name="typeofpaper"
+              id="selectpaper"
+              
+              onChange={changepaper}
+              className="text-white relative bg-[#85f622] hover:bg-[#8ce240] focus:ring-1 focus:outline-none focus:ring-[#8ce240] font-medium rounded-lg text-sm px-2 py-1  text-center inline-flex items-center"
+              // value={author}
+            >
+              {['IEEE Single Column','IEEE Two Column', 'Springer', 'ACM', 'Elsevier'].map((value) => (
+                <option key={value} value={value} className="bg-white divide-y divide-gray-100 rounded-lg shadow w-36 text-black">
+                  {value}
+                </option>
+              ))}
+            </select>
       </div>
       <div className="formfield">
         <div className="type font-semibold text-xl">Paper & Author Detail</div>
@@ -304,7 +318,7 @@ const Edit = (props) => {
                 }}
                 className="flex gap-1 items-center justify-center text-sm bg-blue-200 px-2 py-1 rounded-xl"
               >
-                Add Para <IoMdAddCircleOutline />
+                Para <IoMdAddCircleOutline />
               </button>
 
               <button
@@ -315,7 +329,7 @@ const Edit = (props) => {
                 }}
                 className="flex gap-1 items-center justify-center text-sm bg-blue-200 px-2 py-1 rounded-xl"
               >
-                Add Figure <IoMdAddCircleOutline />
+                Figure <IoMdAddCircleOutline />
               </button>
               <button
                 onClick={() => {
@@ -325,7 +339,7 @@ const Edit = (props) => {
                 }}
                 className="flex gap-1 items-center justify-center text-sm bg-blue-200 px-2 py-1 rounded-xl"
               >
-                Add Table <IoMdAddCircleOutline />
+                Table <IoMdAddCircleOutline />
               </button>
             </div>
           </div>
@@ -376,7 +390,7 @@ const Edit = (props) => {
                 }}
                 className="flex gap-1 items-center justify-center text-sm bg-blue-200 px-2 py-1 rounded-xl"
               >
-                Add Para <IoMdAddCircleOutline />
+                Para <IoMdAddCircleOutline />
               </button>{" "}
               <button
                 onClick={() => {
@@ -386,7 +400,7 @@ const Edit = (props) => {
                 }}
                 className="flex gap-1 items-center justify-center text-sm bg-blue-200 px-2 py-1 rounded-xl"
               >
-                Add Figure <IoMdAddCircleOutline />
+                Figure <IoMdAddCircleOutline />
               </button>
               <button
                 onClick={() => {
@@ -396,7 +410,7 @@ const Edit = (props) => {
                 }}
                 className="flex gap-1 items-center justify-center text-sm bg-blue-200 px-2 py-1 rounded-xl"
               >
-                Add Table <IoMdAddCircleOutline />
+                Table <IoMdAddCircleOutline />
               </button>
             </div>
           </div>
@@ -454,17 +468,17 @@ const Edit = (props) => {
                 }}
                 className="flex gap-1 items-center justify-center text-sm bg-blue-200 px-2 py-1 rounded-xl"
               >
-                Add Para <IoMdAddCircleOutline />
+                Para <IoMdAddCircleOutline />
               </button>{" "}
               <button
                 onClick={() => {
                   document
-                  .getElementById(`architectureParafig${architecturepara}`)
-                  .classList.remove("hidden");
+                    .getElementById(`architectureParafig${architecturepara}`)
+                    .classList.remove("hidden");
                 }}
                 className="flex gap-1 items-center justify-center text-sm bg-blue-200 px-2 py-1 rounded-xl"
               >
-                Add Figure <IoMdAddCircleOutline />
+                Figure <IoMdAddCircleOutline />
               </button>
               <button
                 onClick={() => {
@@ -474,7 +488,7 @@ const Edit = (props) => {
                 }}
                 className="flex gap-1 items-center justify-center text-sm bg-blue-200 px-2 py-1 rounded-xl"
               >
-                Add Table <IoMdAddCircleOutline />
+                Table <IoMdAddCircleOutline />
               </button>
             </div>
           </div>
@@ -528,27 +542,27 @@ const Edit = (props) => {
                 }}
                 className="flex gap-1 items-center justify-center text-sm bg-blue-200 px-2 py-1 rounded-xl"
               >
-                Add Para <IoMdAddCircleOutline />
+                Para <IoMdAddCircleOutline />
               </button>{" "}
               <button
                 onClick={() => {
                   document
-                  .getElementById(`methodologyParafig${methodologypara}`)
-                  .classList.remove("hidden");
+                    .getElementById(`methodologyParafig${methodologypara}`)
+                    .classList.remove("hidden");
                 }}
                 className="flex gap-1 items-center justify-center text-sm bg-blue-200 px-2 py-1 rounded-xl"
               >
-                Add Figure <IoMdAddCircleOutline />
+                Figure <IoMdAddCircleOutline />
               </button>
               <button
                 onClick={() => {
                   document
-                  .getElementById(`methodologyParatable${methodologypara}`)
-                  .classList.remove("hidden");
+                    .getElementById(`methodologyParatable${methodologypara}`)
+                    .classList.remove("hidden");
                 }}
                 className="flex gap-1 items-center justify-center text-sm bg-blue-200 px-2 py-1 rounded-xl"
               >
-                Add Table <IoMdAddCircleOutline />
+                Table <IoMdAddCircleOutline />
               </button>
             </div>
           </div>
@@ -600,7 +614,7 @@ const Edit = (props) => {
                 }}
                 className="flex gap-1 items-center justify-center text-sm bg-blue-200 px-2 py-1 rounded-xl"
               >
-                Add Para <IoMdAddCircleOutline />
+                Para <IoMdAddCircleOutline />
               </button>{" "}
               <button
                 onClick={() => {
@@ -610,17 +624,17 @@ const Edit = (props) => {
                 }}
                 className="flex gap-1 items-center justify-center text-sm bg-blue-200 px-2 py-1 rounded-xl"
               >
-                Add Figure <IoMdAddCircleOutline />
+                Figure <IoMdAddCircleOutline />
               </button>
               <button
                 onClick={() => {
                   document
-                    .getElementById(`resultParafig${resultpara}`)
+                    .getElementById(`resultParatable${resultpara}`)
                     .classList.remove("hidden");
                 }}
                 className="flex gap-1 items-center justify-center text-sm bg-blue-200 px-2 py-1 rounded-xl"
               >
-                Add Table <IoMdAddCircleOutline />
+                Table <IoMdAddCircleOutline />
               </button>
             </div>
           </div>
@@ -659,7 +673,46 @@ const Edit = (props) => {
                 }}
                 className="flex gap-1 items-center justify-center text-sm bg-blue-200 px-2 py-1 rounded-xl"
               >
-                Add Para <IoMdAddCircleOutline />
+                Para <IoMdAddCircleOutline />
+              </button>
+            </div>
+          </div>
+          <div className="Reference">
+            <label
+              htmlFor="reference"
+              className="block text-sm font-medium mt-4 mb-1"
+            >
+              Reference:
+            </label>
+            {[...Array(parseInt(referencepara))].map((_, index) => {
+              return (
+                <div key={index}>
+                  <label
+                    htmlFor={`reference${index}`}
+                    className="block text-sm font-medium mb-1"
+                  >
+                    Reference{index + 1}:
+                  </label>
+                  <textarea
+                    name={`referencePara${index + 1}`}
+                    id={`reference${index}`}
+                    rows="10"
+                    value={props.formdata["referencePara" + (index + 1)] || ""}
+                    onChange={(e) => handleChange(e)}
+                    className="bg-[#eff2f9] rounded-lg text-sm px-3 py-2 w-full"
+                    placeholder={`Enter Reference ${index + 1}`}
+                  ></textarea>
+                </div>
+              );
+            })}
+            <div className="addbutton flex gap-2">
+              <button
+                onClick={() => {
+                  setreferencepara((referencepara) => referencepara + 1);
+                }}
+                className="flex gap-1 items-center justify-center text-sm bg-blue-200 px-2 py-1 rounded-xl"
+              >
+                Reference <IoMdAddCircleOutline />
               </button>
             </div>
           </div>

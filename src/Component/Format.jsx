@@ -15,10 +15,11 @@ const Format = () => {
     result: "",
     conclusion: "",
   });
+  const [paper, setpaper] = useState('IEEE Single Column')
   return (
     <div className="flex px-1 py-3 border-lime-100 justify-center gap-2">
-      <Edit formdata={formdata} setformdata={setformdata} />
-      <Preview formdata={formdata} />
+      <Edit formdata={formdata} setformdata={setformdata} paper={paper} setpaper={setpaper}/>
+      <Preview formdata={formdata} paper={paper} setpaper={setpaper}/>
     </div>
   );
 };

@@ -6,23 +6,22 @@ import { GrFormPrevious } from "react-icons/gr";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import { Link } from "react-router-dom";
-
+// import {htmlDocx} from 'html-docx-js'
 const Preview = (props) => {
   const data = JSON.stringify(props.formdata);
-  console.log("hey", Object.keys(props.formdata));
   let no_of_introduction = [],
     no_of_conclusion = [],
     no_of_architecture = [],
     no_of_result = [],
     no_of_literature = [],
-    no_of_methodolgy = [];
+    no_of_methodolgy = [],no_of_reference=[];
+
   Object.keys(props.formdata).map((elm) => {
     if (elm.startsWith("introPara")) {
       if (elm.startsWith("introParafig") || elm.endsWith("caption")) {
         no_of_introduction = no_of_introduction;
       } else {
         no_of_introduction.push(elm);
-        console.log("Figure hai kya", props.formdata);
       }
     } else if (elm.startsWith("literaturePara")) {
       if (elm.startsWith("literatureParafig") || elm.endsWith("caption")) {
@@ -49,17 +48,25 @@ const Preview = (props) => {
       } else {
         no_of_conclusion.push(elm);
       }
+    }  else if (elm.startsWith("referencePara")) {
+      if (elm.startsWith("referenceParafig") || elm.endsWith("caption")) {
+      } else {
+        no_of_reference.push(elm);
+      }
     } else {
     }
   });
   const downloadpdf = () => {
     const doc = new jsPDF();
     let content = document.querySelector("#content").innerHTML;
-    document.querySelector("body").innerHTML = content;
+    // document.querySelector("body").innerHTML = content;
+//     var converted = htmlDocx.asBlob(content);
+//     console.log(converted)
+// saveAs(converted, 'test.docx');
 
     // document.querySelector('body').classList.add('invisible')
     // document.querySelector('#content').classList.add('visible')
-    window.print();
+    // window.print();
     // const content = document.getElementById('content');
     // html2canvas(content).then(canvas => {
     //     const img width='300px'Data = canvas.toDataURL('image/png');
@@ -73,12 +80,13 @@ const Preview = (props) => {
   let content = document.querySelector("#content");
   return (
     <div className="bg-red-300 flex justify-center ">
+    
       <div className="">
         <div className="options flex justify-between">
           <div className="select flex text-sm">
             <div className="template flex justify-center items-center ">
               <GoMultiSelect />
-              Select Template
+              {props.paper}
             </div>
             <div className="zoom flex justify-center items-center ml-3">
               | - A +
@@ -99,10 +107,12 @@ const Preview = (props) => {
           </div>
         </div>
         <div className="center flex justify-center ">
+        
           <div
-            className="page bg-white mt-1 w-[794px] px-[54px] py-[72px]"
+            className="page bg-white mt-1 w-[794px] h-[900px] px-[54px] py-[72px]"
             id="content"
-          >
+          >{props.paper==='IEEE Single Column'?
+<div>
             <div className="title text-[22px] font-bold text-center ">
               {props.formdata.title}
             </div>
@@ -147,12 +157,55 @@ const Preview = (props) => {
                         ""
                       )}
                       {props.formdata[`introParafig${index + 1}caption`] ? (
-                        <figure className="custom-figure text-[9px] font-light text-center">
+                        <figure className="custom-figure text-[8px] font-light text-center">
                           <figcaption>
                             Fig 1.{index + 1}{" "}
                             {props.formdata[`introParafig${index + 1}caption`]}
                           </figcaption>
                         </figure>
+                      ) : (
+                        ""
+                      )}
+                      {props.formdata[`introParatable${index + 1}`] ? (
+                        <div className="flex justify-center items-center flex-col">
+                          <table className="border-collapse border border-gray-400">
+                            <tbody>
+                              {[
+                                ...Array(
+                                  parseInt(
+                                    props.formdata[`introParatable${index + 1}`]
+                                      .length
+                                  )
+                                ),
+                              ].map((_, rowIndex) => (
+                                <tr key={rowIndex}>
+                                  {[
+                                    ...Array(
+                                      parseInt(
+                                        props.formdata[
+                                          `introParatable${index + 1}`
+                                        ][0].length
+                                      )
+                                    ),
+                                  ].map((_, colIndex) => (
+                                    <td
+                                      key={colIndex}
+                                      className="border border-gray-400 p-1"
+                                    >
+                                      {
+                                        props.formdata[
+                                          `introParatable${index + 1}`
+                                        ][rowIndex][colIndex]
+                                      }
+                                    </td>
+                                  ))}
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                          <div className="caption text-[8px] p-1">
+                          Table 1.{index} {props.formdata[`introParatable${index + 1}caption`]}</div>
+                        </div>
                       ) : (
                         ""
                       )}
@@ -185,7 +238,7 @@ const Preview = (props) => {
                       {props.formdata[
                         `literatureParafig${index + 1}caption`
                       ] ? (
-                        <figure className="custom-figure text-[9px] font-light text-center">
+                        <figure className="custom-figure text-[8px] font-light text-center">
                           <figcaption>
                             Fig 2.{index + 1}{" "}
                             {
@@ -195,6 +248,49 @@ const Preview = (props) => {
                             }
                           </figcaption>
                         </figure>
+                      ) : (
+                        ""
+                      )}
+                       {props.formdata[`literatureParatable${index + 1}`] ? (
+                        <div className="flex justify-center items-center flex-col">
+                          <table className="border-collapse border border-gray-400">
+                            <tbody>
+                              {[
+                                ...Array(
+                                  parseInt(
+                                    props.formdata[`literatureParatable${index + 1}`]
+                                      .length
+                                  )
+                                ),
+                              ].map((_, rowIndex) => (
+                                <tr key={rowIndex}>
+                                  {[
+                                    ...Array(
+                                      parseInt(
+                                        props.formdata[
+                                          `literatureParatable${index + 1}`
+                                        ][0].length
+                                      )
+                                    ),
+                                  ].map((_, colIndex) => (
+                                    <td
+                                      key={colIndex}
+                                      className="border border-gray-400 p-1"
+                                    >
+                                      {
+                                        props.formdata[
+                                          `literatureParatable${index + 1}`
+                                        ][rowIndex][colIndex]
+                                      }
+                                    </td>
+                                  ))}
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                          <div className="caption text-[8px] p-1">
+                          Table 2.{index} {props.formdata[`literatureParatable${index + 1}caption`]}</div>
+                        </div>
                       ) : (
                         ""
                       )}
@@ -227,7 +323,7 @@ const Preview = (props) => {
                       {props.formdata[
                         `architectureParafig${index + 1}caption`
                       ] ? (
-                        <figure className="custom-figure text-[9px] font-light text-center">
+                        <figure className="custom-figure text-[8px] font-light text-center">
                           <figcaption>
                             Fig 3.{index + 1}{" "}
                             {
@@ -237,6 +333,48 @@ const Preview = (props) => {
                             }
                           </figcaption>
                         </figure>
+                      ) : (
+                        ""
+                      )} {props.formdata[`architectureParatable${index + 1}`] ? (
+                        <div className="flex justify-center items-center flex-col">
+                          <table className="border-collapse border border-gray-400">
+                            <tbody>
+                              {[
+                                ...Array(
+                                  parseInt(
+                                    props.formdata[`architectureParatable${index + 1}`]
+                                      .length
+                                  )
+                                ),
+                              ].map((_, rowIndex) => (
+                                <tr key={rowIndex}>
+                                  {[
+                                    ...Array(
+                                      parseInt(
+                                        props.formdata[
+                                          `architectureParatable${index + 1}`
+                                        ][0].length
+                                      )
+                                    ),
+                                  ].map((_, colIndex) => (
+                                    <td
+                                      key={colIndex}
+                                      className="border border-gray-400 p-1"
+                                    >
+                                      {
+                                        props.formdata[
+                                          `architectureParatable${index + 1}`
+                                        ][rowIndex][colIndex]
+                                      }
+                                    </td>
+                                  ))}
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                          <div className="caption text-[8px] p-1">
+                          Table 3.{index} {props.formdata[`architectureParatable${index + 1}caption`]}</div>
+                        </div>
                       ) : (
                         ""
                       )}
@@ -269,7 +407,7 @@ const Preview = (props) => {
                       {props.formdata[
                         `methodologyParafig${index + 1}caption`
                       ] ? (
-                        <figure className="custom-figure text-[9px] font-light text-center">
+                        <figure className="custom-figure text-[8px] font-light text-center">
                           <figcaption>
                             Fig 4.{index + 1}{" "}
                             {
@@ -279,6 +417,48 @@ const Preview = (props) => {
                             }
                           </figcaption>
                         </figure>
+                      ) : (
+                        ""
+                      )} {props.formdata[`methodologyParatable${index + 1}`] ? (
+                        <div className="flex justify-center items-center flex-col">
+                          <table className="border-collapse border border-gray-400">
+                            <tbody>
+                              {[
+                                ...Array(
+                                  parseInt(
+                                    props.formdata[`methodologyParatable${index + 1}`]
+                                      .length
+                                  )
+                                ),
+                              ].map((_, rowIndex) => (
+                                <tr key={rowIndex}>
+                                  {[
+                                    ...Array(
+                                      parseInt(
+                                        props.formdata[
+                                          `methodologyParatable${index + 1}`
+                                        ][0].length
+                                      )
+                                    ),
+                                  ].map((_, colIndex) => (
+                                    <td
+                                      key={colIndex}
+                                      className="border border-gray-400 p-1"
+                                    >
+                                      {
+                                        props.formdata[
+                                          `methodologyParatable${index + 1}`
+                                        ][rowIndex][colIndex]
+                                      }
+                                    </td>
+                                  ))}
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                          <div className="caption text-[8px] p-1">
+                          Table 4.{index} {props.formdata[`methodologyParatable${index + 1}caption`]}</div>
+                        </div>
                       ) : (
                         ""
                       )}
@@ -307,12 +487,54 @@ const Preview = (props) => {
                         ""
                       )}
                       {props.formdata[`resultParafig${index + 1}caption`] ? (
-                        <figure className="custom-figure text-[9px] font-light text-center">
+                        <figure className="custom-figure text-[8px] font-light text-center">
                           <figcaption>
                             Fig 5.{index + 1}{" "}
                             {props.formdata[`resultParafig${index + 1}caption`]}
                           </figcaption>
                         </figure>
+                      ) : (
+                        ""
+                      )} {props.formdata[`resultParatable${index + 1}`] ? (
+                        <div className="flex justify-center items-center flex-col">
+                          <table className="border-collapse border border-gray-400">
+                            <tbody>
+                              {[
+                                ...Array(
+                                  parseInt(
+                                    props.formdata[`resultParatable${index + 1}`]
+                                      .length
+                                  )
+                                ),
+                              ].map((_, rowIndex) => (
+                                <tr key={rowIndex}>
+                                  {[
+                                    ...Array(
+                                      parseInt(
+                                        props.formdata[
+                                          `resultParatable${index + 1}`
+                                        ][0].length
+                                      )
+                                    ),
+                                  ].map((_, colIndex) => (
+                                    <td
+                                      key={colIndex}
+                                      className="border border-gray-400 p-1"
+                                    >
+                                      {
+                                        props.formdata[
+                                          `resultParatable${index + 1}`
+                                        ][rowIndex][colIndex]
+                                      }
+                                    </td>
+                                  ))}
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                          <div className="caption text-[8px] p-1">
+                          Table 5.{index} {props.formdata[`resultParatable${index + 1}caption`]}</div>
+                        </div>
                       ) : (
                         ""
                       )}
@@ -333,12 +555,30 @@ const Preview = (props) => {
                   );
                 })}
               </div>
-            </div>
-          </div>
-        </div>
+              <div className="reference text-[10px]  py-2">
+                <div className="heading text-center uppercase text-[8px]">
+                  VII. Reference
+                </div>
+                {no_of_reference.map((val, index) => {
+                  return (
+                    <div key={index}>
+                      [{index+1}].&nbsp;
+                      {props.formdata[`referencePara${(index + 1) % 10}`]}
+                    </div>
+                  );
+                })}
+              </div>
+            </div></div>
+             : <div>No Preview Available currently for {props.paper}</div>
+             }
+         </div>
+        
+         
+        </div> 
         <div className="pageope flex justify-center mt-3 text-xs text-[#484747] item-center">
           <GrFormPrevious /> <span>1/1</span> <GrFormNext />
         </div>
+        // }
       </div>
     </div>
   );
