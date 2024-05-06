@@ -578,7 +578,7 @@ const Preview = (props) => {
         <div className="pageope flex justify-center mt-3 text-xs text-[#484747] item-center">
           <GrFormPrevious /> <span>1/1</span> <GrFormNext />
         </div>
-        // }
+        
       </div>
     </div>
   );
